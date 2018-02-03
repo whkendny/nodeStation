@@ -20,8 +20,8 @@ module.exports=function (){
         }else{
           if(data[0].password==password){
             //成功
-            req.session['user_id']=data[0].ID;
-            res.redirect('/');
+            req.session['user_id']=data[0].id;
+            res.redirect('/user/index');
           }else{
             res.status(400).send('this password is incorrect').end();
           }
