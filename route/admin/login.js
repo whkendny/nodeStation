@@ -1,7 +1,7 @@
 const express=require('express');
 const common=require('../../libs/common');
 const mysql=require('mysql');
-var db=mysql.createPool({host: 'localhost', user: 'root', password: 'root', database: 'web'});
+var db=mysql.createPool({host: 'localhost', user: 'root', password: 'wedo123', database: 'web'});
 module.exports=function (){
   var router=express.Router();
   router.get('/', (req, res)=>{
@@ -9,7 +9,7 @@ module.exports=function (){
   });
   router.post('/', (req, res)=>{
     var username=req.body.username;
-    var password=common.md5(req.body.password+common.MD5_SUFFIX);
+    var password=req.body.password; //common.md5(req.body.password+common.MD5_SUFFIX)
     db.query(`SELECT * FROM admin_table WHERE username='${username}'`, (err, data)=>{
       if(err){
         console.error(err);

@@ -1,6 +1,6 @@
 const express=require('express');
 const mysql=require('mysql');
-var db=mysql.createPool({host: 'localhost', user: 'root', password: 'root', database: 'web'});
+var db=mysql.createPool({host: 'localhost', user: 'root', password: 'wedo123', database: 'web'});
 module.exports=function (){
   var router=express.Router();
   router.get('/', (req, res)=>{
@@ -10,6 +10,7 @@ module.exports=function (){
     var username=req.body.username;
     var password=req.body.password;
     db.query(`SELECT * FROM users WHERE username='${username}'`, (err, data)=>{
+      console.log('userLogin:--', err, data);
       if(err){
         console.error(err);
         res.status(500).send('database error').end();

@@ -43,5 +43,5 @@ server.use('/user/',require('./route/user')());
 server.use('/admin/', require('./route/admin')());
 
 //5.default：static
-server.use('/',static('./static'));
+// server.use('/',static('./static'));
 server.use('/files',static('./static'));

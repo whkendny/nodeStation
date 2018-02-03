@@ -2,7 +2,7 @@
 const express=require('express');
 const common=require('../../libs/common');
 const mysql=require('mysql');
-var db=mysql.createPool({host: 'localhost', user: 'root', password: 'root', database: 'web'});
+var db=mysql.createPool({host: 'localhost', user: 'root', password: 'wedo123', database: 'web'});
 const pathLib=require('path');
 const fs=require('fs');
 module.exports=function (){
@@ -72,7 +72,7 @@ module.exports=function (){
     var description=req.body.description;
     var href=req.body.href;
     var post_time=req.body.post_time;
-    
+
     if(req.files[0]){
       var ext=pathLib.parse(req.files[0].originalname).ext;
 
