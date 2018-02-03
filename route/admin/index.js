@@ -5,7 +5,6 @@ module.exports=function (){
   var router=express.Router();
   //检查登录状态
   router.use((req, res, next)=>{
-    console.log('后台登录检查:--',req.session, req.url );
     if(!req.session['admin_id'] && req.url!='/login'){ //没有登录
       res.redirect('/admin/login');
     }else{

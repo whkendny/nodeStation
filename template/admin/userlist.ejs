@@ -11,7 +11,7 @@
   a,a:hover{ text-decoration:none; color:#333}
   .shadow {position:fixed; width:100%; height:100%; background:#000; opacity:0.3; filter:alpha(opacity:30);left:0; top: 0;}
   .modal-dialog{position:fixed; left:40%; top:0;z-index: 999;}
- 
+
   </style>
   <title>导航</title>
   </head>
@@ -32,7 +32,7 @@
             <% for(var i=0;i<navs.length;i++){ %>
             <tr>
               <td><%=navs[i].id%></td>
-              <td><%=navs[i].username%></td> 
+              <td><%=navs[i].username%></td>
               <td><%=navs[i].password%></td>
               <td>
                 <button class="btn btn-sm btn-danger"><a href="?act=del&id=<%=navs[i].id%>" onclick="return confirm('你真的要删吗？')">删除</a></button>
