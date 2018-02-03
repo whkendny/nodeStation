@@ -25,50 +25,51 @@
 ![image](https://github.com/k2-xu/vue-express-ejs-node-mysql/blob/master/readme/shujuku.png)
 
 #### 后台管理登录页 采用md5加密，主要功能代码为：<br>
-const crypto=require('crypto');<br>
+```js
+const crypto=require('crypto');
 module.exports={
   MD5_SUFFIX: 'FDSW$t34tregt5tO&$(#RHuyoyiUYE*&OI$HRLuy87odlfh是个风格热腾腾)',
   md5: function (str){
-    var obj=crypto.createHash('md5');<br>
-    obj.update(str);<br> 
+    var obj=crypto.createHash('md5');
+    obj.update(str);
     return obj.digest('hex');
-  } 
-};<br>
-之后再验证登录：
-const express=require('express');<br>
-const common=require('../../libs/common');<br>
-const mysql=require('mysql');<br>
-var db=mysql.createPool({host: 'localhost', user: 'root', password: 'root', database: 'web'});<br>
-module.exports=function (){<br>
-  var router=express.Router();<br>
+  }
+};
+//之后再验证登录：
+const express=require('express');
+const common=require('../../libs/common');
+const mysql=require('mysql');
+var db=mysql.createPool({host: 'localhost', user: 'root', password: 'root', database: 'web'});
+module.exports=function (){
+  var router=express.Router();
   router.get('/', (req, res)=>{
-    res.render('admin/login.ejs', {});<br>
-  });<br>
+    res.render('admin/login.ejs', {});
+  });
   router.post('/', (req, res)=>{
-    var username=req.body.username;<br>
-    var password=common.md5(req.body.password+common.MD5_SUFFIX);<br>
+    var username=req.body.username;
+    var password=common.md5(req.body.password+common.MD5_SUFFIX);
     db.query(`SELECT * FROM admin_table WHERE username='${username}'`, (err, data)=>{
       if(err){
         console.error(err);
-        res.status(500).send('database error').end();<br>
+        res.status(500).send('database error').end();
       }else{
         if(data.length==0){
-          res.status(400).send('no this admin').end();<br>
+          res.status(400).send('no this admin').end();
         }else{
           if(data[0].password==password){
             //成功
-            req.session['admin_id']=data[0].ID;<br>
-            res.redirect('/admin/');<br>
+            req.session['admin_id']=data[0].ID;
+            res.redirect('/admin/');
           }else{
-            res.status(400).send('this password is incorrect').end();<br>
+            res.status(400).send('this password is incorrect').end();
           }
         }
       }
-    });<br>
-  });<br>
-  return router;<br>
+    });
+  });
+  return router;
 };
-
+```
 后台登录页面效果图如下：
 
 ![image](https://github.com/k2-xu/vue-express-ejs-node-mysql/blob/master/readme/login01.png)
@@ -129,6 +130,17 @@ module.exports=function (){<br>
 
 ### [详情请下载说明文档](https://github.com/k2-xu/vue-express-ejs-node-mysql/blob/master/%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3.doc "详细设计文档")
 
-### 如有问题欢迎咨询本人QQ：326531916  微信：xu326531916 
+### 路由部分
+```js
+//4.route
+server.use('/',require('./route/web')());     // http://localhost:8090/get_descNews
+server.use('/zhuce/',require('./route/zhuce')());
+server.use('/user/',require('./route/user')());  //http://localhost:8090/user/
+server.use('/admin/', require('./route/admin')()); //http://localhost:8090/admin/
+```
 
+### 登录
+- http://localhost:8090/admin/login
+- http://localhost:8090/user/login
 
+- http://localhost:8090/ 下属路由待完善

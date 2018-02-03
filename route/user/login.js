@@ -10,7 +10,6 @@ module.exports=function (){
     var username=req.body.username;
     var password=req.body.password;
     db.query(`SELECT * FROM users WHERE username='${username}'`, (err, data)=>{
-      console.log('userLogin:--', err, data);
       if(err){
         console.error(err);
         res.status(500).send('database error').end();
@@ -21,7 +20,7 @@ module.exports=function (){
           if(data[0].password==password){
             //成功
             req.session['user_id']=data[0].id;
-            res.redirect('/user/index');
+            res.redirect('/user/');
           }else{
             res.status(400).send('this password is incorrect').end();
           }
